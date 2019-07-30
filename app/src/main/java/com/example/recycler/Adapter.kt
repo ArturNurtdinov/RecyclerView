@@ -1,5 +1,6 @@
 package com.example.recycler
 
+import android.annotation.SuppressLint
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,9 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.list_item_view.view.*
 
-class Adapter(private val elements: ArrayList<String>) : RecyclerView.Adapter<Adapter.ViewHolder>() {
+class Adapter(private val elements: ArrayList<String>) :
+    RecyclerView.Adapter<Adapter.ViewHolder>() {
     private val LOG_TAG = "MY_RECYCLER"
 
+    @SuppressLint("InflateParams")
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
         val itemView = LayoutInflater.from(p0.context).inflate(R.layout.list_item_view, null, false)
         return ViewHolder(itemView)
@@ -27,6 +30,24 @@ class Adapter(private val elements: ArrayList<String>) : RecyclerView.Adapter<Ad
         elements.removeAt(position)
         notifyItemRemoved(position)
         notifyItemRangeChanged(position, elements.size)
+    }
+
+    fun swapItems(fromPosition: Int, toPosition: Int) {
+        val list = mutableListOf<String>()
+        elements.forEach {
+            list.add(it)
+        }
+        if (fromPosition < toPosition) {
+            for (i in fromPosition until toPosition) {
+                elements[i] = list.set(i + 1, elements[i])
+            }
+        } else {
+            for (i in fromPosition..toPosition + 1) {
+                elements[i] = list.set(i - 1, elements[i])
+            }
+        }
+        Log.d(LOG_TAG, "Moving from $fromPosition to $toPosition")
+        notifyItemMoved(fromPosition, toPosition)
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
