@@ -7,6 +7,7 @@ class DragManageAdapter(var adapter: Adapter, dragDirs: Int, swipeDirs: Int) :
         ItemTouchHelper.SimpleCallback(dragDirs, swipeDirs) {
 
     override fun onMove(p0: RecyclerView, p1: RecyclerView.ViewHolder, p2: RecyclerView.ViewHolder): Boolean {
+        adapter.swapItems(p1.adapterPosition, p2.adapterPosition)
         return true
     }
 
