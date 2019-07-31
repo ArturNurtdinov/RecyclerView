@@ -24,8 +24,8 @@ class Adapter(private val elements: ArrayList<String>, private val context: Cont
     override fun getItemCount(): Int = elements.size
 
     override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
-        Log.d(LOG_TAG, "On bind view holder called at position $p1")
         p0.bind(elements[p1])
+        Log.d(LOG_TAG, "On bind view holder called at position $p1")
     }
 
     fun removeItem(position: Int) {
