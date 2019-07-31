@@ -29,10 +29,10 @@ class Adapter(private val elements: ArrayList<String>, private val context: Cont
     }
 
     fun removeItem(position: Int) {
-        Log.d(LOG_TAG, "Item deleted at position $position")
         elements.removeAt(position)
         notifyItemRemoved(position)
         notifyItemRangeChanged(position, elements.size)
+        Log.d(LOG_TAG, "Item deleted at position $position")
     }
 
     fun swapItems(fromPosition: Int, toPosition: Int) {
@@ -49,14 +49,15 @@ class Adapter(private val elements: ArrayList<String>, private val context: Cont
                 elements[i] = list.set(i - 1, elements[i])
             }
         }
-        Log.d(LOG_TAG, "Moving from $fromPosition to $toPosition")
         notifyItemMoved(fromPosition, toPosition)
+        Log.d(LOG_TAG, "Moving from $fromPosition to $toPosition")
     }
 
     fun entry(position: Int) {
         val intent = Intent(context, FinishActivity::class.java)
         intent.putExtra(FinishActivity.KEY, elements[position])
         context.startActivity(intent)
+        Log.d(LOG_TAG, "Entry with element ${elements[position]}")
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
