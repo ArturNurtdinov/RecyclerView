@@ -1,6 +1,8 @@
 package com.example.recycler
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,9 +10,10 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.list_item_view.view.*
 
-class Adapter(private val elements: ArrayList<String>) :
+class Adapter(private val elements: ArrayList<String>, private val context: Context) :
     RecyclerView.Adapter<Adapter.ViewHolder>() {
     private val LOG_TAG = "MY_RECYCLER"
+
 
     @SuppressLint("InflateParams")
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
@@ -48,6 +51,12 @@ class Adapter(private val elements: ArrayList<String>) :
         }
         Log.d(LOG_TAG, "Moving from $fromPosition to $toPosition")
         notifyItemMoved(fromPosition, toPosition)
+    }
+
+    fun entry(position: Int) {
+        val intent = Intent(context, FinishActivity::class.java)
+        intent.putExtra(FinishActivity.KEY, elements[position])
+        context.startActivity(intent)
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

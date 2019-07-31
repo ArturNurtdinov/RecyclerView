@@ -12,7 +12,11 @@ class DragManageAdapter(var adapter: Adapter, dragDirs: Int, swipeDirs: Int) :
     }
 
     override fun onSwiped(p0: RecyclerView.ViewHolder, p1: Int) {
-        adapter.removeItem(p0.adapterPosition)
+        if (p1 == ItemTouchHelper.LEFT) {
+            adapter.removeItem(p0.adapterPosition)
+        } else {
+            adapter.entry(p0.adapterPosition)
+        }
     }
 
 }
